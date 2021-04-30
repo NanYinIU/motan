@@ -68,6 +68,7 @@ public class SimpleConfigHandler implements ConfigHandler {
         String protocolName = serviceUrl.getParameter(URLParamType.protocol.getName(), URLParamType.protocol.getValue());
         Protocol orgProtocol = ExtensionLoader.getExtensionLoader(Protocol.class).getExtension(protocolName);
         Provider<T> provider = getProvider(orgProtocol, ref, serviceUrl, interfaceClass);
+        //DefaultProvider
 
         Protocol protocol = new ProtocolFilterDecorator(orgProtocol);
         Exporter<T> exporter = protocol.export(provider, serviceUrl);
@@ -108,6 +109,7 @@ public class SimpleConfigHandler implements ConfigHandler {
                         "register error! Could not find extension for registry protocol:" + url.getProtocol()
                                 + ", make sure registry module for " + url.getProtocol() + " is in classpath!"));
             }
+            // zookeeper客户端ZkClient
             Registry registry = registryFactory.getRegistry(url);
             registry.register(serviceUrl);
         }

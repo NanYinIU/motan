@@ -110,6 +110,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
 
         checkInterfaceAndMethods(interfaceClass, methods);
 
+        // 解析到registryUrls里面，是URL对象
         loadRegistryUrls();
         if (registryUrls == null || registryUrls.size() == 0) {
             throw new IllegalStateException("Should set registry config for service:" + interfaceClass.getName());
@@ -160,10 +161,10 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
 
         map.put(URLParamType.nodeType.getName(), MotanConstants.NODE_TYPE_SERVICE);
         map.put(URLParamType.refreshTimestamp.getName(), String.valueOf(System.currentTimeMillis()));
-
+        // 将参数录入到map里
         collectConfigParams(map, protocolConfig, basicService, extConfig, this);
         collectMethodConfigParams(map, this.getMethods());
-
+        // 生成server的URL对象
         URL serviceUrl = new URL(protocolName, hostAddress, port, interfaceClass.getName(), map);
 
         if (serviceExists(serviceUrl)) {
@@ -197,8 +198,9 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
             }
         }
 
+        // 获取configHandler
         ConfigHandler configHandler = ExtensionLoader.getExtensionLoader(ConfigHandler.class).getExtension(MotanConstants.DEFAULT_VALUE);
-
+        // 执行export方法，获取exporter对象
         exporters.add(configHandler.export(interfaceClass, ref, urls, serviceUrl));
     }
 

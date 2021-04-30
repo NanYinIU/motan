@@ -53,6 +53,7 @@ public abstract class AbstractRegistryFactory implements RegistryFactory {
             if (registry != null) {
                 return registry;
             }
+            // 建立zookeeper节点
             registry = createRegistry(url);
             if (registry == null) {
                 throw new MotanFrameworkException("Create registry false for url:" + url, MotanErrorMsgConstant.FRAMEWORK_INIT_ERROR);
