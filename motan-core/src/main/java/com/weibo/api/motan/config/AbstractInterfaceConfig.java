@@ -376,8 +376,10 @@ public class AbstractInterfaceConfig extends AbstractConfig {
 
     // 解析注册中心URL
     protected void loadRegistryUrls() {
+        // 先清空
         registryUrls.clear();
         if (registries != null && !registries.isEmpty()) {
+            // 对标签 register 获取到注册config信息
             for (RegistryConfig config : registries) {
                 String address = config.getAddress();
                 if (StringUtils.isBlank(address)) {

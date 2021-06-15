@@ -108,10 +108,12 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
             return;
         }
 
+        // 检查配置文件配置的接口和方法是否存在
         checkInterfaceAndMethods(interfaceClass, methods);
 
-        // 解析到registryUrls里面，是URL对象
+        // 解析到registryUrls里面，是一组URL对象 List<URL>,主要作用就是解析注册中心的地址放到解析到registryUrls里面
         loadRegistryUrls();
+
         if (registryUrls == null || registryUrls.size() == 0) {
             throw new IllegalStateException("Should set registry config for service:" + interfaceClass.getName());
         }

@@ -35,10 +35,17 @@ import java.util.Map;
 public class UrlUtils {
 
 
+    /**
+     * 通过配置中的String的address信息，处理为URL
+     * @param address
+     * @param defaults
+     * @return
+     */
     public static List<URL> parseURLs(String address, Map<String, String> defaults) {
         if (address == null || address.length() == 0) {
             return null;
         }
+        // 分割地址
         String[] addresses = MotanConstants.REGISTRY_SPLIT_PATTERN.split(address);
         if (addresses == null || addresses.length == 0) {
             return null; // here won't be empty
@@ -74,11 +81,12 @@ public class UrlUtils {
         String[] addresses = MotanConstants.COMMA_SPLIT_PATTERN.split(address);
         String url = addresses[0];
 
+        // 获取协议，默认是motan
         String defaultProtocol = defaults == null ? null : defaults.get("protocol");
         if (defaultProtocol == null || defaultProtocol.length() == 0) {
             defaultProtocol = URLParamType.protocol.getValue();
         }
-
+        // 默认协议端口
         int defaultPort = StringTools.parseInteger(defaults == null ? null : defaults.get("port"));
         String defaultPath = defaults == null ? null : defaults.get("path");
         Map<String, String> defaultParameters = defaults == null ? null : new HashMap<String, String>(defaults);
