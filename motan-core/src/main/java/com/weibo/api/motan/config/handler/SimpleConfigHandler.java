@@ -58,6 +58,7 @@ public class SimpleConfigHandler implements ConfigHandler {
     @Override
     public <T> T refer(Class<T> interfaceClass, List<Cluster<T>> clusters, String proxyType) {
         ProxyFactory proxyFactory = ExtensionLoader.getExtensionLoader(ProxyFactory.class).getExtension(proxyType);
+        // 简单粗暴，jdk的newProxyInstance创建代理
         return proxyFactory.getProxy(interfaceClass, clusters);
     }
 

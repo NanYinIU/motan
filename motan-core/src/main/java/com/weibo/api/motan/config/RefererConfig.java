@@ -141,6 +141,7 @@ public class RefererConfig<T> extends AbstractRefererConfig {
             clusters.add(clusterSupport.getCluster());
 
             if (proxy == null) {
+                // 这里设置了代理类型，默认是JDK
                 String defaultValue = StringUtils.isBlank(serviceInterface) ? URLParamType.proxy.getValue() : MotanConstants.PROXY_COMMON;
                 proxy = refUrl.getParameter(URLParamType.proxy.getName(), defaultValue);
             }

@@ -38,7 +38,7 @@ public class RefererConfigBean<T> extends RefererConfig<T> implements FactoryBea
     private static final long serialVersionUID = 8381310907161365567L;
 
     private transient BeanFactory beanFactory;
-
+    // 使用FactoryBean，通过getObject获取bean对象
     @Override
     public T getObject() throws Exception {
         return getRef();

@@ -424,6 +424,7 @@ public class ClusterSupport<T> implements NotifyListener {
 
     @SuppressWarnings("unchecked")
     private void prepareCluster() {
+        // 从配置中读取集群配置
         String clusterName = url.getParameter(URLParamType.cluster.getName(), URLParamType.cluster.getValue());
         String loadbalanceName = url.getParameter(URLParamType.loadbalance.getName(), URLParamType.loadbalance.getValue());
         String haStrategyName = url.getParameter(URLParamType.haStrategy.getName(), URLParamType.haStrategy.getValue());
@@ -431,7 +432,9 @@ public class ClusterSupport<T> implements NotifyListener {
         cluster = ExtensionLoader.getExtensionLoader(Cluster.class).getExtension(clusterName);
         LoadBalance<T> loadBalance = ExtensionLoader.getExtensionLoader(LoadBalance.class).getExtension(loadbalanceName);
         HaStrategy<T> ha = ExtensionLoader.getExtensionLoader(HaStrategy.class).getExtension(haStrategyName);
+        // 加载不同策略类
         ha.setUrl(url);
+        // 设置集群配置
         cluster.setLoadBalance(loadBalance);
         cluster.setHaStrategy(ha);
         cluster.setUrl(url);

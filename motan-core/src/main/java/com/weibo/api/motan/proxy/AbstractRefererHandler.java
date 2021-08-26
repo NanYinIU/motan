@@ -74,6 +74,7 @@ public class AbstractRefererHandler<T> {
             boolean throwException = Boolean.parseBoolean(cluster.getUrl().getParameter(URLParamType.throwException.getName(), URLParamType.throwException.getValue()));
             try {
                 MotanFrameworkUtil.logEvent(request, MotanConstants.TRACE_INVOKE);
+                // 这里的call就是通过ha和负载均衡策略最后通过netty获取到的结果
                 response = cluster.call(request);
                 if (async) {
                     if (response instanceof ResponseFuture) {
