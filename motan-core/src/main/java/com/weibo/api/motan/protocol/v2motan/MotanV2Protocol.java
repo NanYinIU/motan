@@ -45,6 +45,7 @@ public class MotanV2Protocol extends AbstractProtocol {
 
     @Override
     protected <T> Exporter<T> createExporter(Provider<T> provider, URL url) {
+        // 协议解码器默认为motan2
         String codec = url.getParameter(URLParamType.codec.getName());
         // motan-compatible as default codec at server end.
         if (StringUtils.isBlank(codec) || codec.equals("compressMotan")

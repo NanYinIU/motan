@@ -114,7 +114,7 @@ public abstract class FailbackRegistry extends AbstractRegistry {
     @Override
     public void subscribe(URL url, NotifyListener listener) {
         removeForFailedSubAndUnsub(url, listener);
-
+// 上一步已经获取到了zkclient，下面会直接进行订阅
         try {
             super.subscribe(url, listener);
         } catch (Exception e) {

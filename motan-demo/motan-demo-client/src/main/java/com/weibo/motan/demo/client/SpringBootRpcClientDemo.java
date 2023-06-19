@@ -50,6 +50,7 @@ public class SpringBootRpcClientDemo {
         ProtocolConfigBean config = new ProtocolConfigBean();
         config.setDefault(true);
         config.setName("motan");
+        config.setId("demoMotan:8002");
         config.setMaxContentLength(1048576);
         return config;
     }
@@ -57,8 +58,8 @@ public class SpringBootRpcClientDemo {
     @Bean(name = "registry")
     public RegistryConfigBean registryConfig() {
         RegistryConfigBean config = new RegistryConfigBean();
-        config.setRegProtocol("direct");
-        config.setAddress("127.0.0.1:8002");
+        config.setRegProtocol("zookeeper");
+        config.setAddress("127.0.0.1:2181");
         return config;
     }
 
@@ -66,7 +67,7 @@ public class SpringBootRpcClientDemo {
     public BasicRefererConfigBean baseRefererConfig() {
         BasicRefererConfigBean config = new BasicRefererConfigBean();
         config.setProtocol("demoMotan");
-        config.setGroup("motan-demo-rpc");
+        config.setGroup("testgroup");
         config.setModule("motan-demo-rpc");
         config.setApplication("myMotanDemo");
         config.setRegistry("registry");

@@ -53,7 +53,7 @@ public abstract class AbstractProtocol implements Protocol {
         }
 
         String protocolKey = MotanFrameworkUtil.getProtocolKey(url);
-
+// motan://10.3.0.17:8002/testgroup/com.weibo.motan.demo.service.MotanDemoService/1.0
         synchronized (exporterMap) {
             Exporter<T> exporter = (Exporter<T>) exporterMap.get(protocolKey);
 
@@ -62,9 +62,11 @@ public abstract class AbstractProtocol implements Protocol {
                         MotanErrorMsgConstant.FRAMEWORK_INIT_ERROR);
             }
 
+            //创建暴露服务，并初始化
             exporter = createExporter(provider, url);
             exporter.init();
 
+            // 重新组装 protocol://host:port/group/interface/version
             protocolKey =  MotanFrameworkUtil.getProtocolKey(url);// rebuild protocolKey，maybe port change when using random port
             exporterMap.put(protocolKey, exporter);
 

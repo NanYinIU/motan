@@ -17,6 +17,7 @@
  */
 package com.weibo.motan.demo.springboot;
 
+import com.weibo.api.motan.config.ExtConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -58,10 +59,19 @@ public class SpringBootRpcServerDemo {
         return config;
     }
 
-    @Bean(name = "registryConfig1")
-    public RegistryConfigBean registryConfig() {
+//    @Bean(name = "registryConfig1")
+//    public RegistryConfigBean registryConfig() {
+//        RegistryConfigBean config = new RegistryConfigBean();
+//        config.setRegProtocol("local");
+//        return config;
+//    }
+
+    @Bean(name = "registryConfig2")
+    public RegistryConfigBean registryConfig2() {
         RegistryConfigBean config = new RegistryConfigBean();
-        config.setRegProtocol("local");
+        config.setRegProtocol("zookeeper");
+        //        config.setRegProtocol("zookeeper");
+        config.setAddress("127.0.0.1:2181");
         return config;
     }
 
@@ -69,12 +79,13 @@ public class SpringBootRpcServerDemo {
     public BasicServiceConfigBean baseServiceConfig() {
         BasicServiceConfigBean config = new BasicServiceConfigBean();
         config.setExport("demoMotan:8002");
+//        config.setExtConfig(new ExtConfig().setId(););
         config.setGroup("testgroup");
         config.setAccessLog(false);
         config.setShareChannel(true);
         config.setModule("motan-demo-rpc");
         config.setApplication("myMotanDemo");
-        config.setRegistry("registryConfig1");
+        config.setRegistry("registryConfig2");
         return config;
     }
 

@@ -67,6 +67,7 @@ public class CommandServiceManager implements CommandListener, ServiceListener {
         groupServiceCache.put(groupName, urls);
 
         List<URL> finalResult = new ArrayList<URL>();
+        // 在zkcli获取到监听通知的时候，调用放 discoverOneGroup 重新发现服务，重新订阅服务，达到重复通知的目的
         if (commandCache != null) {
             Map<String, Integer> weights = new HashMap<String, Integer>();
             finalResult = discoverServiceWithCommand(refUrl, weights, commandCache);

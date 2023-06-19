@@ -45,7 +45,7 @@ public abstract class AbstractRegistryFactory implements RegistryFactory {
     }
 
     @Override
-    public Registry getRegistry(URL url) {
+    public Registry getRegistry(URL url) {//zookeeper://127.0.0.1:2181/com.weibo.api.motan.registry.RegistryService
         String registryUri = getRegistryUri(url);
         try {
             lock.lock();
@@ -53,12 +53,12 @@ public abstract class AbstractRegistryFactory implements RegistryFactory {
             if (registry != null) {
                 return registry;
             }
-            // 建立zookeeper节点
+            // 这里create只是创建了个zk的链接，还啥也没干呢
             registry = createRegistry(url);
             if (registry == null) {
                 throw new MotanFrameworkException("Create registry false for url:" + url, MotanErrorMsgConstant.FRAMEWORK_INIT_ERROR);
             }
-            registries.put(registryUri, registry);
+            registries.put(registryUri, registry);//zookeeper://127.0.0.1:2181/com.weibo.api.motan.registry.RegistryService 放到map里
             return registry;
         } catch (Exception e) {
             throw new MotanFrameworkException("Create registry false for url:" + url, e, MotanErrorMsgConstant.FRAMEWORK_INIT_ERROR);

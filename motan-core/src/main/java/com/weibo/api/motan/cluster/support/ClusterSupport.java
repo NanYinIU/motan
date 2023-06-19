@@ -110,7 +110,7 @@ public class ClusterSupport<T> implements NotifyListener {
                 }
             }
 
-            // client 注册自己，同时订阅service列表
+            // client 注册自己，同时订阅service列表 com.weibo.motan.demo.service.MotanDemoService
             Registry registry = getRegistry(ru);
             registry.subscribe(subUrl, this);
         }

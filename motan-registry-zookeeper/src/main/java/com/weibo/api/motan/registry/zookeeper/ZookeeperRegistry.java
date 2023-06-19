@@ -61,7 +61,7 @@ public class ZookeeperRegistry extends CommandFailbackRegistry implements Closab
                 reconnectClient();
             }
         };
-        zkClient.subscribeStateChanges(zkStateListener);
+        zkClient.subscribeStateChanges(zkStateListener);//
         ShutDownHook.registerShutdownHook(this);
     }
 
@@ -102,8 +102,8 @@ public class ZookeeperRegistry extends CommandFailbackRegistry implements Closab
                 LoggerUtil.warn("[ZookeeperRegistry] subscribe service: create node error, path=%s, msg=%s", ZkUtils.toNodePath(url, ZkNodeType.CLIENT), e.getMessage());
             }
 
-            String serverTypePath = ZkUtils.toNodeTypePath(url, ZkNodeType.AVAILABLE_SERVER);
-            zkClient.subscribeChildChanges(serverTypePath, zkChildListener);
+            String serverTypePath = ZkUtils.toNodeTypePath(url, ZkNodeType.AVAILABLE_SERVER);///motan/motan-demo-rpc/com.weibo.motan.demo.service.MotanDemoService/server
+            zkClient.subscribeChildChanges(serverTypePath, zkChildListener);// 监听service下的子节点
             LoggerUtil.info(String.format("[ZookeeperRegistry] subscribe service: path=%s, info=%s", ZkUtils.toNodePath(url, ZkNodeType.AVAILABLE_SERVER), url.toFullStr()));
         } catch (Throwable e) {
             throw new MotanFrameworkException(String.format("Failed to subscribe %s to zookeeper(%s), cause: %s", url, getUrl(), e.getMessage()), e);
@@ -332,10 +332,10 @@ public class ZookeeperRegistry extends CommandFailbackRegistry implements Closab
     }
 
     private void createNode(URL url, ZkNodeType nodeType) {
-        String nodeTypePath = ZkUtils.toNodeTypePath(url, nodeType);
-        if (!zkClient.exists(nodeTypePath)) {
-            zkClient.createPersistent(nodeTypePath, true);
-        }
+        String nodeTypePath = ZkUtils.toNodeTypePath(url, nodeType);// /motan/motan-demo-rpc/com.weibo.motan.demo.service.MotanDemoService/client
+        if (!zkClient.exists(nodeTypePath)) {// /motan/testgroup/com.weibo.motan.demo.service.MotanDemoService/unavailableServer
+            zkClient.createPersistent(nodeTypePath, true);// 持久化节点
+        }// 现在全部在unAVailable节点下创建数据
         zkClient.createEphemeral(ZkUtils.toNodePath(url, nodeType), url.toFullStr());
     }
 

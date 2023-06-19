@@ -133,13 +133,17 @@ public class ProtocolFilterDecorator implements Protocol {
     }
 
     private <T> Provider<T> decorateWithFilter(final Provider<T> provider, URL url) {
+        // 添加到 filter 里面，通过这个filter完成日志记录、限流等目的,这个filter
+        // 获取所以加载的filter
         List<Filter> filters = getFilters(url, MotanConstants.NODE_TYPE_SERVICE);
         if (filters == null || filters.size() == 0) {
             return provider;
         }
         Provider<T> lastProvider = provider;
+        // 在暴露服务前，循环所有的filter
         for (Filter filter : filters) {
             final Filter f = filter;
+            // 如果没有初始化，则进行初始化
             if (f instanceof InitializableFilter) {
                 ((InitializableFilter) f).init(lastProvider);
             }
@@ -191,6 +195,7 @@ public class ProtocolFilterDecorator implements Protocol {
 				}
             };
         }
+        // 每次都需要经过filter进行处理，返回最后处理完成后的provider
         return lastProvider;
     }
 

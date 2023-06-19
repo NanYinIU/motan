@@ -67,9 +67,10 @@ public class SimpleConfigHandler implements ConfigHandler {
         // export service
         // 利用protocol decorator来增加filter特性
         String protocolName = serviceUrl.getParameter(URLParamType.protocol.getName(), URLParamType.protocol.getValue());
+        // 获取的是 Protocol 的实现类 @see com.weibo.api.motan.protocol.v2motan.MotanV2Protocol
         Protocol orgProtocol = ExtensionLoader.getExtensionLoader(Protocol.class).getExtension(protocolName);
         Provider<T> provider = getProvider(orgProtocol, ref, serviceUrl, interfaceClass);
-        //DefaultProvider
+        //DefaultProvider, 生成方法的map，在后面invoke的时候，会从这个map里面查询全限定名
 
         Protocol protocol = new ProtocolFilterDecorator(orgProtocol);
         Exporter<T> exporter = protocol.export(provider, serviceUrl);
@@ -101,7 +102,7 @@ public class SimpleConfigHandler implements ConfigHandler {
     }
 
     private void register(List<URL> registryUrls, URL serviceUrl) {
-
+        // 获取motan的注册地址 zookeeper//127.0.01::2181 + PATH：com.weibo.api.motan.registry.RegistryService
         for (URL url : registryUrls) {
             // 根据check参数的设置，register失败可能会抛异常，上层应该知晓
             RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getExtension(url.getProtocol());

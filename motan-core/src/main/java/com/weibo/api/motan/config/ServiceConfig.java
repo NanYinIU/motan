@@ -125,6 +125,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
                 throw new MotanServiceException(String.format("Unknow port in service:%s, protocol:%s", interfaceClass.getName(),
                         protocolConfig.getId()));
             }
+            // 真实暴露接口的行为
             doExport(protocolConfig, port);
         }
 
@@ -146,6 +147,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
 
     @SuppressWarnings("unchecked")
     private void doExport(ProtocolConfig protocolConfig, int port) {
+        // protocol 协议名如 motan
         String protocolName = protocolConfig.getName();
         if (protocolName == null || protocolName.length() == 0) {
             protocolName = URLParamType.protocol.getValue();

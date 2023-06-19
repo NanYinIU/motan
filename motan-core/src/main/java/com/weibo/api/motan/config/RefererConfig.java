@@ -132,7 +132,7 @@ public class RefererConfig<T> extends AbstractRefererConfig {
 
             collectConfigParams(params, protocol, basicReferer, extConfig, this);
             collectMethodConfigParams(params, this.getMethods());
-
+// com.weibo.motan.demo.service.MotanDemoService
             String path = StringUtils.isBlank(serviceInterface) ? interfaceClass.getName() : serviceInterface;
             URL refUrl = new URL(protocol.getName(), localIp, MotanConstants.DEFAULT_INT_VALUE, path, params);
             ClusterSupport<T> clusterSupport = createClusterSupport(refUrl, configHandler);

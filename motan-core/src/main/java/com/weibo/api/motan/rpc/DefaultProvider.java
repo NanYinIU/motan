@@ -61,6 +61,7 @@ public class DefaultProvider<T> extends AbstractProvider<T> {
 
         boolean defaultThrowExceptionStack = URLParamType.transExceptionStack.getBooleanValue();
         try {
+            // Methods 反射 invoke 方法实现， proxyImpl 实现类引用
             Object value = method.invoke(proxyImpl, request.getArguments());
             response.setValue(value);
         } catch (Exception e) {
